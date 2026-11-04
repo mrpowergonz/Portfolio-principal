@@ -93,9 +93,9 @@
     :root.oscuro .tema .icono-luna { display: none; }
     header h1 { margin: 0; font-size: clamp(2rem, 6vw, 3rem); letter-spacing: -.02em; line-height: 1.15; }
     header p { margin: 8px 0 0; font-size: 1.15rem; opacity: .85; }
-    .social { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .social { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 32px; }
     .social a {
-      display: inline-flex; align-items: center; gap: 8px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
       color: #fff; text-decoration: none; font-weight: 500; font-size: .95rem;
       background: rgba(255, 255, 255, .14);
       border: 1px solid rgba(255, 255, 255, .25);
@@ -219,24 +219,20 @@
     .link-btn:hover { color: var(--danger); }
 
     /* Cursor animado (solo con ratón) */
-    .cursor-anillo, .cursor-onda {
+    .cursor {
       position: fixed; top: 0; left: 0; z-index: 1000;
-      border: 2px solid #fff; border-radius: 50%;
-      mix-blend-mode: difference; pointer-events: none;
+      pointer-events: none; mix-blend-mode: difference;
+      opacity: 0; transition: opacity .2s;
     }
-    .cursor-anillo {
-      width: 32px; height: 32px; margin: -16px 0 0 -16px;
-      opacity: 0;
-      transition: width .2s, height .2s, margin .2s, opacity .2s, background-color .2s;
+    .cursor.visible { opacity: 1; }
+    .cursor span {
+      display: block; width: 10px; height: 10px; margin: -5px 0 0 -5px;
+      border-radius: 50%; background: #fff;
+      transition: transform .3s cubic-bezier(.2, .8, .2, 1);
     }
-    .cursor-anillo.visible { opacity: .7; }
-    .cursor-anillo.sobre-enlace {
-      width: 54px; height: 54px; margin: -27px 0 0 -27px;
-      background: rgba(255, 255, 255, .15); opacity: 1;
-    }
-    .cursor-anillo.pulsado { width: 22px; height: 22px; margin: -11px 0 0 -11px; }
-    .cursor-onda { width: 16px; height: 16px; margin: -8px 0 0 -8px; animation: onda .55s ease-out forwards; }
-    @keyframes onda { to { transform: scale(5); opacity: 0; } }
+    .cursor.sobre-enlace span { transform: scale(4); }
+    .cursor.pulsado span { transform: scale(.6); }
+    .cursor.sobre-enlace.pulsado span { transform: scale(3.2); }
 
     footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 0 0 32px; }
 
@@ -245,6 +241,7 @@
       .hero { flex-direction: column; align-items: flex-start; gap: 20px; }
       .avatar { width: 140px; height: 140px; }
       .proyectos { grid-template-columns: 1fr; }
+      .social { grid-template-columns: repeat(2, 1fr); margin-top: 24px; }
       .card { padding: 20px; }
     }
   </style>
@@ -267,7 +264,9 @@
       <div>
       <h1>Adam Power González</h1>
       <p>Consultor Técnico · Salesforce Marketing Cloud</p>
-      <nav class="social" aria-label="Redes">
+      </div>
+    </div>
+    <nav class="wrap social" aria-label="Enlaces">
         <a href="https://github.com/mrpowergonz" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.4-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
           GitHub
@@ -276,13 +275,13 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
           LinkedIn
         </a>
-        <a href="https://mrpower.portfoliobox.net/" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M9 3 7.2 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3H9Zm3 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>
-          Fotografía
-        </a>
         <a href="https://nateevo.com/" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M9 3h6a2 2 0 0 1 2 2v2h3a2 2 0 0 1 2 2v4H2V9a2 2 0 0 1 2-2h3V5a2 2 0 0 1 2-2Zm0 2v2h6V5H9ZM2 15h8v1a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-1h8v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-4Z"/></svg>
           Nateevo
+        </a>
+        <a href="https://mrpower.portfoliobox.net/" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M9 3 7.2 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3H9Zm3 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>
+          Fotografía
         </a>
         <a href="https://www.instagram.com/mr___power/" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm5.25-3.75a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>
@@ -290,11 +289,9 @@
         </a>
         <a href="#fuera-del-codigo">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 20 9 7l4 7 2-3 7 9H2Z"/></svg>
-          Más allá del código
+          Más sobre mí
         </a>
-      </nav>
-      </div>
-    </div>
+    </nav>
   </header>
 
   <main class="wrap">
@@ -539,14 +536,15 @@
     sistemaOscuro.addEventListener('change', reflejarTema);
     reflejarTema();
 
-    // Cursor animado: un anillo que sigue al ratón y una onda al hacer clic en enlaces y botones
+    // Cursor animado: un punto que sigue al ratón, crece sobre enlaces y botones y se encoge al hacer clic
     const conRaton = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     const sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (conRaton && !sinMovimiento) {
-      const anillo = document.createElement('div');
-      anillo.className = 'cursor-anillo';
-      anillo.setAttribute('aria-hidden', 'true');
-      document.body.append(anillo);
+      const puntero = document.createElement('div');
+      puntero.className = 'cursor';
+      puntero.setAttribute('aria-hidden', 'true');
+      puntero.append(document.createElement('span'));
+      document.body.append(puntero);
 
       const INTERACTIVOS = 'a, button, input, label';
       let x = 0, y = 0, ax = 0, ay = 0, primera = true;
@@ -554,29 +552,19 @@
       document.addEventListener('mousemove', e => {
         x = e.clientX; y = e.clientY;
         if (primera) { ax = x; ay = y; primera = false; }
-        anillo.classList.add('visible');
+        puntero.classList.add('visible');
       });
-      document.addEventListener('mouseleave', () => anillo.classList.remove('visible'));
+      document.addEventListener('mouseleave', () => puntero.classList.remove('visible'));
       document.addEventListener('mouseover', e => {
-        anillo.classList.toggle('sobre-enlace', !!e.target.closest(INTERACTIVOS));
+        puntero.classList.toggle('sobre-enlace', !!e.target.closest(INTERACTIVOS));
       });
-      document.addEventListener('mousedown', () => anillo.classList.add('pulsado'));
-      document.addEventListener('mouseup', () => anillo.classList.remove('pulsado'));
-      document.addEventListener('click', e => {
-        if (!e.target.closest('a, button')) return;
-        const onda = document.createElement('div');
-        onda.className = 'cursor-onda';
-        onda.setAttribute('aria-hidden', 'true');
-        onda.style.left = e.clientX + 'px';
-        onda.style.top = e.clientY + 'px';
-        onda.addEventListener('animationend', () => onda.remove());
-        document.body.append(onda);
-      });
+      document.addEventListener('mousedown', () => puntero.classList.add('pulsado'));
+      document.addEventListener('mouseup', () => puntero.classList.remove('pulsado'));
 
       (function seguir() {
-        ax += (x - ax) * 0.2;
-        ay += (y - ay) * 0.2;
-        anillo.style.transform = `translate(${ax}px, ${ay}px)`;
+        ax += (x - ax) * 0.25;
+        ay += (y - ay) * 0.25;
+        puntero.style.transform = `translate(${ax}px, ${ay}px)`;
         requestAnimationFrame(seguir);
       })();
     }
