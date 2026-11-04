@@ -49,6 +49,9 @@
     }
 
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    #fuera-del-codigo { scroll-margin-top: 24px; }
     body {
       margin: 0;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -261,6 +264,14 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M9 3h6a2 2 0 0 1 2 2v2h3a2 2 0 0 1 2 2v4H2V9a2 2 0 0 1 2-2h3V5a2 2 0 0 1 2-2Zm0 2v2h6V5H9ZM2 15h8v1a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-1h8v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-4Z"/></svg>
           Nateevo
         </a>
+        <a href="https://www.instagram.com/mr___power/" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm5.25-3.75a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>
+          Instagram
+        </a>
+        <a href="#fuera-del-codigo">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 20 9 7l4 7 2-3 7 9H2Z"/></svg>
+          Más allá del código
+        </a>
       </nav>
       </div>
     </div>
@@ -287,6 +298,23 @@
         <li>Git</li>
         <li>Visual Studio Code</li>
         <li>Figma</li>
+      </ul>
+    </section>
+
+    <section class="card" id="fuera-del-codigo" aria-labelledby="fuera-titulo">
+      <h2 id="fuera-titulo">Más allá del código</h2>
+      <p>Además de programar, he viajado y vivido en varios países. Me he movido haciendo voluntariados y he trabajado en oficios muy distintos, de <strong>fotógrafo</strong> a <strong>guía de montaña</strong>. Esas experiencias me han enseñado a adaptarme rápido, a entenderme con gente muy diferente y a resolver problemas sobre la marcha.</p>
+      <p>En mi tiempo libre escalo, toco instrumentos y patino. Puedes ver parte de todo esto en mi <a href="https://www.instagram.com/mr___power/" target="_blank" rel="noopener noreferrer">Instagram</a> y en mi <a href="https://mrpower.portfoliobox.net/" target="_blank" rel="noopener noreferrer">portfolio de fotografía</a>.</p>
+
+      <h3>Lo que me mueve</h3>
+      <ul class="tags">
+        <li>Viajes</li>
+        <li>Voluntariado</li>
+        <li>Fotografía</li>
+        <li>Montaña</li>
+        <li>Escalada</li>
+        <li>Música</li>
+        <li>Skate</li>
       </ul>
     </section>
 
