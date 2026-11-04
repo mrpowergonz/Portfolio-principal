@@ -218,6 +218,26 @@
     .link-btn { background: none; border: 0; color: var(--muted); padding: 0; }
     .link-btn:hover { color: var(--danger); }
 
+    /* Cursor animado (solo con ratón) */
+    .cursor-anillo, .cursor-onda {
+      position: fixed; top: 0; left: 0; z-index: 1000;
+      border: 2px solid #fff; border-radius: 50%;
+      mix-blend-mode: difference; pointer-events: none;
+    }
+    .cursor-anillo {
+      width: 32px; height: 32px; margin: -16px 0 0 -16px;
+      opacity: 0;
+      transition: width .2s, height .2s, margin .2s, opacity .2s, background-color .2s;
+    }
+    .cursor-anillo.visible { opacity: .7; }
+    .cursor-anillo.sobre-enlace {
+      width: 54px; height: 54px; margin: -27px 0 0 -27px;
+      background: rgba(255, 255, 255, .15); opacity: 1;
+    }
+    .cursor-anillo.pulsado { width: 22px; height: 22px; margin: -11px 0 0 -11px; }
+    .cursor-onda { width: 16px; height: 16px; margin: -8px 0 0 -8px; animation: onda .55s ease-out forwards; }
+    @keyframes onda { to { transform: scale(5); opacity: 0; } }
+
     footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 0 0 32px; }
 
     @media (max-width: 480px) {
@@ -304,6 +324,7 @@
     <section class="card" id="fuera-del-codigo" aria-labelledby="fuera-titulo">
       <h2 id="fuera-titulo">Más allá del código</h2>
       <p>Además de programar, he viajado y vivido en varios países. Me he movido haciendo voluntariados y he trabajado en oficios muy distintos, de <strong>fotógrafo</strong> a <strong>guía de montaña</strong>. Esas experiencias me han enseñado a adaptarme rápido, a entenderme con gente muy diferente y a resolver problemas sobre la marcha.</p>
+      <p>También me he formado en <strong>mercados financieros</strong> y llevo más de 5 años haciendo trading, tanto en futuros como en spot.</p>
       <p>En mi tiempo libre escalo, toco instrumentos y patino. Puedes ver parte de todo esto en mi <a href="https://www.instagram.com/mr___power/" target="_blank" rel="noopener noreferrer">Instagram</a> y en mi <a href="https://mrpower.portfoliobox.net/" target="_blank" rel="noopener noreferrer">portfolio de fotografía</a>.</p>
 
       <h3>Lo que me mueve</h3>
@@ -315,6 +336,7 @@
         <li>Escalada</li>
         <li>Música</li>
         <li>Skate</li>
+        <li>Trading</li>
       </ul>
     </section>
 
@@ -516,6 +538,48 @@
     });
     sistemaOscuro.addEventListener('change', reflejarTema);
     reflejarTema();
+
+    // Cursor animado: un anillo que sigue al ratón y una onda al hacer clic en enlaces y botones
+    const conRaton = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (conRaton && !sinMovimiento) {
+      const anillo = document.createElement('div');
+      anillo.className = 'cursor-anillo';
+      anillo.setAttribute('aria-hidden', 'true');
+      document.body.append(anillo);
+
+      const INTERACTIVOS = 'a, button, input, label';
+      let x = 0, y = 0, ax = 0, ay = 0, primera = true;
+
+      document.addEventListener('mousemove', e => {
+        x = e.clientX; y = e.clientY;
+        if (primera) { ax = x; ay = y; primera = false; }
+        anillo.classList.add('visible');
+      });
+      document.addEventListener('mouseleave', () => anillo.classList.remove('visible'));
+      document.addEventListener('mouseover', e => {
+        anillo.classList.toggle('sobre-enlace', !!e.target.closest(INTERACTIVOS));
+      });
+      document.addEventListener('mousedown', () => anillo.classList.add('pulsado'));
+      document.addEventListener('mouseup', () => anillo.classList.remove('pulsado'));
+      document.addEventListener('click', e => {
+        if (!e.target.closest('a, button')) return;
+        const onda = document.createElement('div');
+        onda.className = 'cursor-onda';
+        onda.setAttribute('aria-hidden', 'true');
+        onda.style.left = e.clientX + 'px';
+        onda.style.top = e.clientY + 'px';
+        onda.addEventListener('animationend', () => onda.remove());
+        document.body.append(onda);
+      });
+
+      (function seguir() {
+        ax += (x - ax) * 0.2;
+        ay += (y - ay) * 0.2;
+        anillo.style.transform = `translate(${ax}px, ${ay}px)`;
+        requestAnimationFrame(seguir);
+      })();
+    }
 
     document.getElementById('anio').textContent = new Date().getFullYear();
     pintar();
